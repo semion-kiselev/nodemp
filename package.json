@@ -1,0 +1,27 @@
+{
+  "name": "nodemp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "babel-node index.js",
+    "test": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/semion-kiselev/nodemp.git"
+  },
+  "keywords": [],
+  "author": "Semion Kiselev <semion.kiselev@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/semion-kiselev/nodemp/issues"
+  },
+  "homepage": "https://github.com/semion-kiselev/nodemp#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "babel-register": "^6.26.0"
+  }
+}
