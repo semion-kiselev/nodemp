@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "babel-node index.js",
+    "start": "nodemon index.js --exec babel-node --presets es2015,stage-2",
     "test": ""
   },
   "repository": {
@@ -22,6 +22,10 @@
     "babel-cli": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
-    "babel-register": "^6.26.0"
+    "babel-register": "^6.26.0",
+    "nodemon": "^1.12.1"
+  },
+  "dependencies": {
+    "mz": "^2.7.0"
   }
 }
