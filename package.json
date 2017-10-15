@@ -26,6 +26,10 @@
     "nodemon": "^1.12.1"
   },
   "dependencies": {
-    "mz": "^2.7.0"
+    "minimist": "^1.2.0",
+    "mz": "^2.7.0",
+    "request": "^2.83.0",
+    "split": "^1.0.1",
+    "through2": "^2.0.3"
   }
 }
