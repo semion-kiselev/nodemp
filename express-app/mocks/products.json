@@ -1,17 +1,26 @@
 [
   {
-    "id": 1,
-    "name": "product1",
+    "name": "Bumetanide",
+    "brand": "Bumetanide",
+    "company": "Mylan Institutional Inc.",
+    "price": "$42.28",
+    "isbn": "158995707-5",
     "reviewers": [1]
   },
   {
-    "id": 2,
-    "name": "product2",
-    "reviewers": [2, 3]
+    "name": "Pulmo Ferrum",
+    "brand": "Pulmo Ferrum",
+    "company": "Uriel Pharmacy Inc.",
+    "price": "$23.67",
+    "isbn": "136397285-5",
+    "reviewers": [2,3]
   },
   {
-    "id": 3,
-    "name": "product3",
-    "reviewers": [1, 3]
+    "name": "Ketorolac Tromethamine",
+    "brand": "Ketorolac Tromethamine",
+    "company": "Akorn Inc.",
+    "price": "$20.28",
+    "isbn": "509013913-X",
+    "reviewers": [1,3]
   }
 ]

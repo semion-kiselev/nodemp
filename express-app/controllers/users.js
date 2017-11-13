@@ -1,5 +1,10 @@
-const users = require('../mocks/users');
+const {User} = require('../models');
 
-exports.getUsers = (req, res) => {
-    res.json(users);
+exports.getUsers = async (req, res) => {
+    try {
+        const users = await User.findAll();
+        res.json(users);
+    } catch(err) {
+        throw err;
+    }
 };

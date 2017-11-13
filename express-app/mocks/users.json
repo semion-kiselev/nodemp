@@ -1,17 +1,17 @@
 [
   {
-    "id": 1,
-    "name": "Vasya",
-    "email": "vasya@gmail.com"
+    "username": "semion_kiselev",
+    "login": "semion.kiselev@gmail.com",
+    "password": "123456"
   },
   {
-    "id": 2,
-    "name": "Petya",
-    "email": "petya@gmail.com"
+    "username": "masha",
+    "login": "masha@gmail.com",
+    "password": "123456"
   },
   {
-    "id": 3,
-    "name": "Masha",
-    "email": "masha@gmail.com"
+    "username": "pasha",
+    "login": "pasha@gmail.com",
+    "password": "123456"
   }
 ]
