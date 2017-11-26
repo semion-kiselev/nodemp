@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const mongodbErrorHandler = require('mongoose-mongodb-errors');
-const {addLastModifiedDate} = require('../helpers/models-hooks');
 
 const productSchema = new Schema({
     name: {
@@ -29,11 +28,14 @@ const productSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User',
         required: 'Please, supply a reviewer!'
-    }]
+    }],
+    lastModifiedDate: {
+        type: Date,
+        default: Date.now
+    }
 }, {
     timestamps: true
 });
 
-productSchema.pre('save', addLastModifiedDate);
 productSchema.plugin(mongodbErrorHandler);
 module.exports = mongoose.model('Product', productSchema);

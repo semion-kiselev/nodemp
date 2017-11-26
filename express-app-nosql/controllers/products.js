@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Product = mongoose.model('Product');
+const {isObjectId} = require('../helpers/validator');
 
 exports.getProducts = async (req, res, next) => {
     try {
@@ -12,7 +13,13 @@ exports.getProducts = async (req, res, next) => {
 
 exports.getProduct = async (req, res, next) => {
     try {
-        const product = await Product.findById(req.params.id);
+        const id = req.params.id;
+
+        if (!isObjectId(id)) {
+            return res.status(400).end();
+        }
+
+        const product = await Product.findById(id);
 
         if (!product) {
             return res.status(404).end('Product Not Found');
@@ -26,7 +33,13 @@ exports.getProduct = async (req, res, next) => {
 
 exports.getProductReviewers = async (req, res, next) => {
     try {
-        const product = await Product.findById(req.params.id).populate('reviewers');
+        const id = req.params.id;
+
+        if (!isObjectId(id)) {
+            return res.status(400).end();
+        }
+
+        const product = await Product.findById(id).populate('reviewers');
 
         if (!product) {
             return res.status(404).end('Product Not Found');
@@ -49,7 +62,13 @@ exports.addProduct = async (req, res, next) => {
 
 exports.deleteProduct = async (req, res, next) => {
     try {
-        await Product.findByIdAndRemove(req.params.id);
+        const id = req.params.id;
+
+        if (!isObjectId(id)) {
+            return res.status(400).end();
+        }
+
+        await Product.findByIdAndRemove(id);
         res.status(200).end();
     } catch(err) {
         next(err);

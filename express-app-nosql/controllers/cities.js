@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const City = mongoose.model('City');
 const mergeDeepRight = require('ramda/src/mergeDeepRight');
+const {isObjectId} = require('../helpers/validator');
 
 exports.getCities = async (req, res, next) => {
     try {
@@ -22,10 +23,16 @@ exports.addCity = async (req, res, next) => {
 
 exports.updateCity = async (req, res, next) => {
     try {
-        const city = await City.findById(req.params.id);
+        const id = req.params.id;
+
+        if (!isObjectId(id)) {
+            return res.status(400).end();
+        }
+
+        const city = await City.findById(id);
         Object.keys(req.body).forEach(prop => (city[prop] = req.body[prop]));
         await city.save();
-        res.json(city);
+        return res.json(city);
     } catch(err) {
         next(err);
     }
@@ -33,7 +40,13 @@ exports.updateCity = async (req, res, next) => {
 
 exports.deleteCity = async (req, res, next) => {
     try {
-        await City.findByIdAndRemove(req.params.id);
+        const id = req.params.id;
+
+        if (!isObjectId(id)) {
+            return res.status(400).end();
+        }
+
+        await City.findByIdAndRemove(id);
         res.status(200).end();
     } catch(err) {
         next(err);

@@ -12,12 +12,20 @@ const City = mongoose.model('City');
 const app = require('./app');
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://nodempuser:nodempuser@ds157185.mlab.com:57185/nodemp')
-    .then(async () => {
-        await loadCollectionIfNotExists(User, users);
-        await loadCollectionIfNotExists(Product, products);
-        await loadCollectionIfNotExists(City, cities);
+
+const start = async () => {
+    try {
+        await mongoose.connect('mongodb://nodempuser:nodempuser@ds157185.mlab.com:57185/nodemp');
+        await Promise.all([
+            loadCollectionIfNotExists(User, users),
+            loadCollectionIfNotExists(Product, products),
+            loadCollectionIfNotExists(City, cities)
+        ]);
 
         app.listen(8080);
-    })
-    .catch(err => console.error(`db connection error: ${err.message}`));
+    } catch(err) {
+        throw err;
+    }
+};
+
+start().catch((err) => console.error(`db connection error: ${err.message}`));

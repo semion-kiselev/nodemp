@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const mongodbErrorHandler = require('mongoose-mongodb-errors');
-const {addLastModifiedDate} = require('../helpers/models-hooks');
 
 const citySchema = new Schema({
     name: {
@@ -19,11 +18,14 @@ const citySchema = new Schema({
     location: {
         lat: Number,
         long: Number
+    },
+    lastModifiedDate: {
+        type: Date,
+        default: Date.now
     }
 }, {
     timestamps: true
 });
 
-citySchema.pre('save', addLastModifiedDate);
 citySchema.plugin(mongodbErrorHandler);
 module.exports = mongoose.model('City', citySchema);
