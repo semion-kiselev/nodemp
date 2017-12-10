@@ -1,0 +1,476 @@
+swagger: "2.0"
+info:
+  description: "This is NodeJS Mentoring Program Project"
+  version: "1.0.0"
+  title: "NodeJS Mentoring Program Project"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "apiteam@swagger.io"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "localhost:10010"
+basePath: "/semion.kiselev/node/1.0.0"
+tags:
+- name: "auth"
+  description: "User authentication"
+- name: "city"
+  description: "Access to cities"
+- name: "user"
+  description: "Access to users"
+- name: "product"
+  description: "Access to products"
+schemes:
+- "http"
+paths:
+  /auth:
+    x-swagger-router-controller: auth
+    post:
+      tags:
+      - "auth"
+      summary: "User authentication"
+      operationId: "authUser"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "placed credentials"
+        required: true
+        schema:
+          $ref: "#/definitions/AuthRequest"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/AuthResponse"
+        401:
+          description: "Unauthorized"
+        500:
+          description: "Server error"
+  /api/cities:
+    x-swagger-router-controller: city
+    get:
+      tags:
+      - "city"
+      summary: "Returns all the cities"
+      description: "This can only be done by the logged in user."
+      operationId: "getCities"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/City"
+        401:
+          description: "Unauthorized"
+        500:
+          description: "Server error"
+    post:
+      tags:
+      - "city"
+      summary: "Place a city"
+      description: "This can only be done by the logged in user."
+      operationId: "addCity"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "placed city"
+        required: true
+        schema:
+          $ref: "#/definitions/City"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/City"
+        401:
+          description: "Unauthorized"
+        422:
+          description: "Validation errors"
+        500:
+          description: "Server error"
+  /api/cities/{cityId}:
+    x-swagger-router-controller: city
+    put:
+      tags:
+      - "city"
+      summary: "Update the city"
+      description: "This can only be done by the logged in user."
+      operationId: "updateCity"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "cityId"
+        in: "path"
+        description: "city id that need to be updated"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "Updated city object"
+        required: true
+        schema:
+          $ref: "#/definitions/City"
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/City"
+        400:
+          description: "Invalid city id supplied"
+        401:
+          description: "Unauthorized"
+        404:
+          description: "City not found"
+        500:
+          description: "Server error"
+    delete:
+      tags:
+      - "city"
+      summary: "Delete city"
+      description: "This can only be done by the logged in user."
+      operationId: "deleteCity"
+      parameters:
+      - name: "cityId"
+        in: "path"
+        description: "city id that need to be deleted"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Successful operation"
+        400:
+          description: "Invalid city id supplied"
+        401:
+          description: "Unauthorized"
+        404:
+          description: "City not found"
+        500:
+          description: "Server error"
+  /api/users:
+    x-swagger-router-controller: user
+    get:
+      tags:
+      - "user"
+      summary: "Returns all the users"
+      description: "This can only be done by the logged in user."
+      operationId: "getUsers"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/User"
+        401:
+          description: "Unauthorized"
+        500:
+          description: "Server error"
+      security:
+      - api_key: []
+  /api/users/{userId}:
+    x-swagger-router-controller: user
+    delete:
+      tags:
+      - "user"
+      summary: "Delete user"
+      description: "This can only be done by the logged in user."
+      operationId: "deleteUser"
+      parameters:
+      - name: "userId"
+        in: "path"
+        description: "user id that need to be deleted"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Successful operation"
+        400:
+          description: "Invalid user id supplied"
+        401:
+          description: "Unauthorized"
+        404:
+          description: "User not found"
+        500:
+          description: "Server error"
+      security:
+      - api_key: []
+  /api/products:
+    x-swagger-router-controller: product
+    get:
+      tags:
+      - "product"
+      summary: "Returns all the products"
+      description: "This can only be done by the logged in user."
+      operationId: "getProducts"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Product"
+        401:
+          description: "Unauthorized"
+        500:
+          description: "Server error"
+      security:
+      - api_key: []
+    post:
+      tags:
+      - "product"
+      summary: "Place a product"
+      description: "This can only be done by the logged in user."
+      operationId: "placeProduct"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "placed product"
+        required: true
+        schema:
+          $ref: "#/definitions/Product"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Product"
+        401:
+          description: "Unauthorized"
+        422:
+          description: "Validation errors"
+        500:
+          description: "Server error"
+      security:
+      - api_key: []
+  /api/products/{productId}:
+    x-swagger-router-controller: product
+    get:
+      tags:
+      - "product"
+      summary: "Return the product by its id"
+      description: "This can only be done by the logged in user."
+      operationId: "getProduct"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "productId"
+        in: "path"
+        description: "product id that need to be deleted"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Product"
+        400:
+          description: "Invalid product id supplied"
+        401:
+          description: "Unauthorized"
+        500:
+          description: "Server error"
+      security:
+      - api_key: []
+    delete:
+      tags:
+      - "product"
+      summary: "Delete product"
+      description: "This can only be done by the logged in user."
+      operationId: "deleteProduct"
+      parameters:
+      - name: "productId"
+        in: "path"
+        description: "product id that need to be deleted"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid product id supplied"
+        401:
+          description: "Unauthorized"
+        404:
+          description: "Product not found"
+        500:
+          description: "Server error"
+      security:
+      - api_key: []
+  /api/products/{productId}/reviewers:
+    x-swagger-router-controller: product
+    get:
+      tags:
+      - "product"
+      summary: "Return the product reviewers by product id"
+      description: "This can only be done by the logged in user."
+      operationId: "getProductReviewers"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "productId"
+        in: "path"
+        description: "product id to get reviewers"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Reviewer"
+        400:
+          description: "Invalid product id supplied"
+        401:
+          description: "Unauthorized"
+        404:
+          description: "Product not found"
+        500:
+          description: "Server error"
+      security:
+      - api_key: []
+securityDefinitions:
+  api_key:
+    type: "apiKey"
+    name: "x-access-token"
+    in: "header"
+definitions:
+  AuthRequest:
+    type: "object"
+    required:
+    - "email"
+    - "password"
+    properties:
+      email:
+        type: "string"
+      password:
+        type: "string"
+    example:
+      password: "password"
+      email: "email"
+  AuthResponse:
+    type: "object"
+    properties:
+      code:
+        type: "number"
+      message:
+        type: "string"
+      data:
+        type: "object"
+        properties: {}
+      token:
+        type: "string"
+    example:
+      code: 200
+      data: "{}"
+      message: "OK"
+      token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVhMTA3NTczYzg5NmFhMzM4YzFkMjRjNSIsImlhdCI6MTUxMjgzMTU5NiwiZXhwIjoxNTEyODM1MTk2fQ.X7Jy5pobtUA-G_6kxtgw-H8KDymIC_PmDYdqJPUrmsY"
+  City:
+    type: "object"
+    required:
+    - "country"
+    - "name"
+    properties:
+      name:
+        type: "string"
+      country:
+        type: "string"
+      capital:
+        type: "boolean"
+        default: false
+      location:
+        type: object
+        properties:
+          lat:
+            type: "number"
+          long:
+            type: "number"
+    example:
+      country: "Belarus"
+      capital: false
+      name: "Minsk"
+      location:
+        lat: 52.4345
+        long: 30.9754
+  Product:
+    type: "object"
+    required:
+    - "brand"
+    - "company"
+    - "isbn"
+    - "name"
+    - "price"
+    - "reviewers"
+    properties:
+      name:
+        type: "string"
+      brand:
+        type: "string"
+      company:
+        type: "string"
+      price:
+        type: "string"
+      isbn:
+        type: "string"
+      reviewers:
+        type: "array"
+        items:
+          type: "string"
+    example:
+      lastModifiedDate: "2017-11-20T19:17:44.530Z"
+      price: "$23.67"
+      isbn: "136397285-5"
+      name: "Pulmo Ferrum"
+      company: "Uriel Pharmacy Inc."
+      brand: "Pulmo Ferrum"
+      reviewers: ["5a107573c896aa338c1d24c6"]
+  User:
+    type: "object"
+    required:
+    - "email"
+    - "password"
+    - "username"
+    properties:
+      email:
+        type: "string"
+      username:
+        type: "string"
+      password:
+        type: "string"
+    example:
+      password: "123456"
+      email: "semion.kiselev@gmail.com"
+      username: "semion"
+  Reviewer:
+    type: "object"
+    properties:
+      email:
+        type: "string"
+      username:
+        type: "string"
+    example:
+      email: "semion.kiselev@gmail.com"
+      username: "semion"
