@@ -2,7 +2,7 @@ const passport = require('passport');
 module.exports = {};
 
 module.exports.jwt = function (req, def, scopes, callback) {
-    const $ = passport.authenticate('jwt', {session: false}, function(error, user, info) {
+    passport.authenticate('jwt', {session: false}, (error, user, info) => {
         if (error) {
             const err = new Error('Error in JWT authentication process');
             err.status = 500;
@@ -17,7 +17,5 @@ module.exports.jwt = function (req, def, scopes, callback) {
 
         req.user = user;
         return callback();
-    });
-
-    $(req, null, callback);
+    })(req, null, callback);
 };
