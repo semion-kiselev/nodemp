@@ -29,7 +29,7 @@ paths:
       tags:
       - "auth"
       summary: "User authentication"
-      operationId: "authUser"
+      operationId: "login"
       consumes:
       - "application/json"
       produces:
@@ -72,6 +72,8 @@ paths:
           description: "Unauthorized"
         500:
           description: "Server error"
+      security:
+        - jwt: []
     post:
       tags:
       - "city"
@@ -182,8 +184,6 @@ paths:
           description: "Unauthorized"
         500:
           description: "Server error"
-      security:
-      - api_key: []
   /api/users/{userId}:
     x-swagger-router-controller: user
     delete:
@@ -209,8 +209,6 @@ paths:
           description: "User not found"
         500:
           description: "Server error"
-      security:
-      - api_key: []
   /api/products:
     x-swagger-router-controller: product
     get:
@@ -233,14 +231,12 @@ paths:
           description: "Unauthorized"
         500:
           description: "Server error"
-      security:
-      - api_key: []
     post:
       tags:
       - "product"
       summary: "Place a product"
       description: "This can only be done by the logged in user."
-      operationId: "placeProduct"
+      operationId: "addProduct"
       consumes:
       - "application/json"
       produces:
@@ -263,8 +259,6 @@ paths:
           description: "Validation errors"
         500:
           description: "Server error"
-      security:
-      - api_key: []
   /api/products/{productId}:
     x-swagger-router-controller: product
     get:
@@ -292,8 +286,6 @@ paths:
           description: "Unauthorized"
         500:
           description: "Server error"
-      security:
-      - api_key: []
     delete:
       tags:
       - "product"
@@ -317,8 +309,6 @@ paths:
           description: "Product not found"
         500:
           description: "Server error"
-      security:
-      - api_key: []
   /api/products/{productId}/reviewers:
     x-swagger-router-controller: product
     get:
@@ -350,10 +340,8 @@ paths:
           description: "Product not found"
         500:
           description: "Server error"
-      security:
-      - api_key: []
 securityDefinitions:
-  api_key:
+  jwt:
     type: "apiKey"
     name: "x-access-token"
     in: "header"
@@ -451,17 +439,13 @@ definitions:
     type: "object"
     required:
     - "email"
-    - "password"
     - "username"
     properties:
       email:
         type: "string"
       username:
         type: "string"
-      password:
-        type: "string"
     example:
-      password: "123456"
       email: "semion.kiselev@gmail.com"
       username: "semion"
   Reviewer:

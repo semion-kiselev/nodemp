@@ -1,5 +1,3 @@
-'use strict';
-
 const mongoose = require('mongoose');
 const City = mongoose.model('City');
 const {isObjectId} = require('../helpers/validator');
@@ -7,13 +5,13 @@ const {isObjectId} = require('../helpers/validator');
 function getCities (req, res, next) {
     City.find()
         .then(cities => res.json(cities))
-        .catch(err => next(err));
+        .catch(next);
 }
 
 function addCity (req, res, next) {
     City.create(req.body)
         .then(city => res.json(city))
-        .catch(err => next(err));
+        .catch(next);
 }
 
 function updateCity (req, res, next) {
@@ -29,7 +27,7 @@ function updateCity (req, res, next) {
             return city.save();
         })
         .then(city => res.json(city))
-        .catch(err => next(err));
+        .catch(next);
 }
 
 function deleteCity (req, res, next) {
@@ -41,7 +39,7 @@ function deleteCity (req, res, next) {
 
     City.findByIdAndRemove(id)
         .then(() => res.status(200).end())
-        .catch(err => next(err));
+        .catch(next);
 }
 
 module.exports = {
